@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="jp">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>スーパーくじ引きマシーン１号</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        text-align: center;
+      }
+      h1 {
+        margin-top: 50px;
+      }
+      button {
+        margin-top: 20px;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+      }
+      #moji {
+        font-size: 36px;
+        margin-top: 20px;
+      }
+      #result {
+        font-size: 108px;
+        margin-top: 10px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1 >スーパーくじ引きマシーン１号</h1>
+    <label>人数：<input type="number" id="max" value="10" min="2"></label>
+    <button onclick="drawNextLottery()">くじを引く</button>
+    <div id="moji"></div>
+    <div id="result"></div>
+  </body>
+  <script type="text/javascript">
+  var min, max, numbers, result;
+
+  function getRandomInt(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+
+  function initializeLottery() {
+    min = 1;
+    max = parseInt(document.getElementById("max").value);
+
+    if (isNaN(min) || isNaN(max)) {
+      alert("有効な数値を入力してください。");
+      return;
+    }
+
+    if (min >= max) {
+      alert("最小値は最大値よりも小さくなければなりません。");
+      return;
+    }
+
+    numbers = [];
+    result = [];
+    for (var i = min; i <= max; i++) {
+      numbers.push(i);
+    }
+  }
+
+  function drawNextLottery() {
+    if (!numbers || numbers.length === 0) {
+      initializeLottery();
+    }
+
+    var index = getRandomInt(0, numbers.length - 1);
+    var number = numbers[index];
+    numbers.splice(index, 1);
+    result.push(number);
+
+    var mojiDiv = document.getElementById("moji");
+    var resultDiv = document.getElementById("result");
+
+    mojiDiv.innerText = "くじの結果";
+    resultDiv.innerText = number;
+  }
+  </script>
+</html>
